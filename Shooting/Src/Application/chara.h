@@ -56,6 +56,4 @@ private:
 
 	bool sutanFlg;
 	bool GardFlg;
-
-	int Test = 0;
 };
