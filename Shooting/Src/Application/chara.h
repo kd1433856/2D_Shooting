@@ -32,28 +32,31 @@ public:
 	void FunnelUpdate();
 	void FunnelDraw();
 
+	void StunInit();
+	void StunUpdate();
+	void StunDraw();
+
 private:
 
 	KdTexture CharaTex;
 	KdTexture BoxTex;
 	KdTexture FunnelTex;
+	KdTexture StunTex;
 
 	Chara player;
 	Chara box;
 	Chara funnel;
+	Chara stun;
 
 	float m_deg;
 	bool starFlg;
 	bool rotateFlg;	//‰ñ“]
 	bool stopFlg;	//’âŽ~
 
-	float RGB_r;
-	float RGB_g;
-	float RGB_b;
-	float RGB_Down;
-
 	float movespeed;
 
 	bool sutanFlg;
 	bool GardFlg;
+
+	float stunAnimY;
 };

@@ -6,6 +6,7 @@ void Scene::Draw2D()
 	player.Draw();
 	player.FunnelDraw();
 	player.BoxDraw();
+	player.StunDraw();
 }
 
 void Scene::Update()
@@ -20,6 +21,7 @@ void Scene::Init()
 	player.Init();
 	player.BoxInit();
 	player.FunnelInit();
+	player.StunInit();
 }
 
 void Scene::Release()

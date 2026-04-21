@@ -7,10 +7,6 @@ void Player::Init()
 	player.scale = { 1.5,1.5 };
 	player.alpha = 1.0f;
 	player.AnimCnt = 0.0f;
-	RGB_r = 1.0f;
-	RGB_g = 1.0f;
-	RGB_b = 1.0f;
-	RGB_Down = 0.05f;
 	movespeed = 5;
 	sutanFlg = false;
 	GardFlg = false;
@@ -38,25 +34,7 @@ void Player::Update()
 
 	if (sutanFlg == true)
 	{
-		RGB_r = 0.8f;
-		RGB_g = 0.8f;
-		RGB_b += RGB_Down;
-		if (RGB_b > 1.0f)
-		{
-			RGB_b = 1.0f;
-			RGB_Down = -0.05f;
-		}
-		else if (RGB_b < 0)
-		{
-			RGB_b = 0.0f;
-			RGB_Down = 0.05f;
-		}
-	}
-	else
-	{
-		RGB_r = 1.0f;
-		RGB_g = 1.0f;
-		RGB_b = 1.0f;
+		StunUpdate();
 	}
 
 	if (GetAsyncKeyState('W') & 0x8000)
@@ -135,8 +113,8 @@ void Player::Update()
 void Player::Draw()
 {
 	SHADER.m_spriteShader.SetMatrix(player.Mat);
-	const Math::Color color = { RGB_r,RGB_g,RGB_b,player.alpha };
-	SHADER.m_spriteShader.DrawTex_Color(&CharaTex, Math::Rectangle{ 48 * (int)player.AnimCnt,0,48,64 }, color);
+	//const Math::Color color = { RGB_r,RGB_g,RGB_b,player.alpha };
+	SHADER.m_spriteShader.DrawTex(&CharaTex, Math::Rectangle{ 48 * (int)player.AnimCnt,0,48,64 }, 1.0f);
 }
 
 void Player::Release()
@@ -258,4 +236,45 @@ void Player::FunnelDraw()
 {
 	SHADER.m_spriteShader.SetMatrix(funnel.Mat);
 	SHADER.m_spriteShader.DrawTex(&FunnelTex, Math::Rectangle{ 32 * (int)funnel.AnimCnt,0,32,32 }, funnel.alpha);
+}
+
+void Player::StunInit()
+{
+	stun.pos = { 0,0 };
+	stun.move = { 0,0 };
+	stun.scale = { 1.5,1.5 };
+	stun.alpha = 1.0f;
+	stun.AnimCnt = 0.0f;
+	stunAnimY = 0;
+
+	StunTex.Load("Texture/Vivid_Motion_23_ Universal_Status_Effects/StunEffect/Spritesheets/StunEffect_Sheet_64x64.png");
+}
+
+void Player::StunUpdate()
+{
+	stun.AnimCnt += 0.15f;
+	if (stun.AnimCnt > 4)
+	{
+		stun.AnimCnt = 0;
+		stunAnimY += 1;
+		if (stunAnimY > 4)
+		{
+			stunAnimY = 0;
+		}
+	}
+
+	stun.pos = player.pos;
+
+	stun.TransMat = Math::Matrix::CreateTranslation(stun.pos.x, stun.pos.y , 0);
+	stun.ScaleMat = Math::Matrix::CreateScale(stun.scale.x, stun.scale.y, 1);
+	stun.Mat = stun.ScaleMat * stun.TransMat;
+}
+
+void Player::StunDraw()
+{
+	if (sutanFlg == true)
+	{
+		SHADER.m_spriteShader.SetMatrix(stun.Mat);
+		SHADER.m_spriteShader.DrawTex(&StunTex, Math::Rectangle{ 64 * (int)stun.AnimCnt,64 * (int)stunAnimY,64,64 }, stun.alpha);
+	}
 }
