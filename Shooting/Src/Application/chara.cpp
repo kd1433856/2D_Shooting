@@ -121,6 +121,8 @@ void Player::Release()
 {
 	CharaTex.Release();
 	BoxTex.Release();
+	FunnelTex.Release();
+	StunTex.Release();
 }
 
 void Player::BoxInit()
