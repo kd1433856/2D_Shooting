@@ -7,9 +7,8 @@ void Player::Init()
 	player.scale = { 1.5,1.5 };
 	player.alpha = 1.0f;
 	player.AnimCnt = 0.0f;
+	player.aliveFlg = true;
 	movespeed = 5;
-	sutanFlg = false;
-	GardFlg = false;
 
 	CharaTex.Load("Texture/WitchFlying.png");
 }
@@ -23,7 +22,7 @@ void Player::Update()
 		player.AnimCnt = 0;
 	}
 
-	if (GardFlg == false)
+	if (box.aliveFlg == false)
 	{
 		movespeed = 5;
 	}
@@ -32,14 +31,14 @@ void Player::Update()
 		movespeed = 2;
 	}
 
-	if (sutanFlg == true)
+	if (stun.aliveFlg == true)
 	{
 		StunUpdate();
 	}
 
 	if (GetAsyncKeyState('W') & 0x8000)
 	{
-		if (sutanFlg == false)
+		if (stun.aliveFlg == false)
 		{
 			player.move.y = movespeed;
 		}
@@ -50,7 +49,7 @@ void Player::Update()
 	}
 	if (GetAsyncKeyState('A') & 0x8000)
 	{
-		if (sutanFlg == false)
+		if (stun.aliveFlg == false)
 		{
 			player.move.x = -movespeed;
 			player.scale.x = -1.5;
@@ -63,7 +62,7 @@ void Player::Update()
 	}
 	if (GetAsyncKeyState('S') & 0x8000)
 	{
-		if (sutanFlg == false)
+		if (stun.aliveFlg == false)
 		{
 			player.move.y = -movespeed;
 		}
@@ -74,7 +73,7 @@ void Player::Update()
 	}
 	if (GetAsyncKeyState('D') & 0x8000)
 	{
-		if (sutanFlg == false)
+		if (stun.aliveFlg == false)
 		{
 			player.move.x = movespeed;
 			player.scale.x = 1.5;
@@ -86,21 +85,26 @@ void Player::Update()
 		}
 	}
 
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	{
+
+	}
+
 	if (GetAsyncKeyState('P') & 0x8000)
 	{
-		sutanFlg = true;
+		stun.aliveFlg = true;
 	}
 	if (GetAsyncKeyState('O') & 0x8000)
 	{
-		sutanFlg = false;
+		stun.aliveFlg = false;
 	}
 	if (GetAsyncKeyState('L') & 0x8000)
 	{
-		GardFlg = true;
+		box.aliveFlg = true;
 	}
 	else
 	{
-		GardFlg = false;
+		box.aliveFlg = false;
 	}
 
 	player.pos += player.move;
@@ -131,13 +135,14 @@ void Player::BoxInit()
 	box.move = { 0,0 };
 	box.scale = { 5.0,5.0 };
 	box.alpha = 1.0f;
+	box.aliveFlg = false;
 
 	BoxTex.Load("Texture/boxes_SpriteSheet.png");
 }
 
 void Player::BoxUpdate()
 {
-	if (GardFlg == true)
+	if (box.aliveFlg == true)
 	{
 		box.alpha = 1.0f;
 	}
@@ -246,6 +251,7 @@ void Player::StunInit()
 	stun.move = { 0,0 };
 	stun.scale = { 1.5,1.5 };
 	stun.alpha = 1.0f;
+	stun.aliveFlg = false;
 	stun.AnimCnt = 0.0f;
 	stunAnimY = 0;
 
@@ -274,9 +280,50 @@ void Player::StunUpdate()
 
 void Player::StunDraw()
 {
-	if (sutanFlg == true)
+	if (stun.aliveFlg == true)
 	{
 		SHADER.m_spriteShader.SetMatrix(stun.Mat);
 		SHADER.m_spriteShader.DrawTex(&StunTex, Math::Rectangle{ 64 * (int)stun.AnimCnt,64 * (int)stunAnimY,64,64 }, stun.alpha);
+	}
+}
+
+void Player::BulletInit()
+{
+	for (int b = 0;b < BulletNum;b++)
+	{
+		bullet[b].pos = { 0,0 };
+		bullet[b].move = { 0,0 };
+		bullet[b].scale = { 1.5,1.5 };
+		bullet[b].alpha = 1.0f;
+		bullet[b].AnimCnt = 0.0f;
+	}
+
+	BulletTex.Load("Texture/Charge1.png");
+}
+
+void Player::BulletUpdate()
+{
+	for (int b = 0;b < BulletNum;b++)
+	{
+		bullet[b].AnimCnt += 0.15f;
+		if (bullet[b].AnimCnt > 5)
+		{
+			bullet[b].AnimCnt = 0;
+		}
+
+		bullet[b].pos += bullet[b].move;
+
+		bullet[b].TransMat = Math::Matrix::CreateTranslation(bullet[b].pos.x, bullet[b].pos.y, 0);
+		bullet[b].ScaleMat = Math::Matrix::CreateScale(bullet[b].scale.x, bullet[b].scale.y, 1);
+		bullet[b].Mat = bullet[b].ScaleMat * bullet[b].TransMat;
+	}
+}
+
+void Player::BulletDraw()
+{
+	for (int b = 0;b < BulletNum;b++)
+	{
+		SHADER.m_spriteShader.SetMatrix(bullet[b].Mat);
+		SHADER.m_spriteShader.DrawTex(&BulletTex, Math::Rectangle{ 64 * (int)bullet[b].AnimCnt,0,64,64}, bullet[b].alpha);
 	}
 }

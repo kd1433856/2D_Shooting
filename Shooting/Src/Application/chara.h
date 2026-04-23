@@ -8,8 +8,9 @@ struct Chara
 	Math::Matrix Mat;
 	Math::Matrix TransMat;
 	Math::Matrix ScaleMat;
-	float alpha;
-	float AnimCnt;
+	float alpha = 1.0f;
+	float AnimCnt = 0.0f;
+	bool aliveFlg = true;
 };
 
 class Player
@@ -36,17 +37,24 @@ public:
 	void StunUpdate();
 	void StunDraw();
 
+	void BulletInit();
+	void BulletUpdate();
+	void BulletDraw();
+
 private:
 
 	KdTexture CharaTex;
 	KdTexture BoxTex;
 	KdTexture FunnelTex;
 	KdTexture StunTex;
+	KdTexture BulletTex;
 
 	Chara player;
 	Chara box;
 	Chara funnel;
 	Chara stun;
+	static const int BulletNum = 10;
+	Chara bullet[BulletNum];
 
 	float m_deg;
 	bool starFlg;
@@ -54,9 +62,6 @@ private:
 	bool stopFlg;	//í‚é~
 
 	float movespeed;
-
-	bool sutanFlg;
-	bool GardFlg;
 
 	float stunAnimY;
 };

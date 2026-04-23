@@ -7,6 +7,7 @@ void Scene::Draw2D()
 	player.FunnelDraw();
 	player.BoxDraw();
 	player.StunDraw();
+	player.BulletDraw();
 }
 
 void Scene::Update()
@@ -14,6 +15,7 @@ void Scene::Update()
 	player.Update();
 	player.BoxUpdate();
 	player.FunnelUpdate();
+	player.BulletUpdate();
 }
 
 void Scene::Init()
@@ -22,6 +24,7 @@ void Scene::Init()
 	player.BoxInit();
 	player.FunnelInit();
 	player.StunInit();
+	player.BulletInit();
 }
 
 void Scene::Release()
