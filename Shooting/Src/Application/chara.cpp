@@ -8,6 +8,7 @@ void Player::Init()
 	player.alpha = 1.0f;
 	player.AnimCnt = 0.0f;
 	player.aliveFlg = true;
+	shotWait = 0;
 	movespeed = 5;
 
 	CharaTex.Load("Texture/WitchFlying.png");
@@ -87,7 +88,34 @@ void Player::Update()
 
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
+		if(shotWait<=0)
+		{
+			for (int b = 0;b < BulletNum;b++)
+			{
+				if (bullet[b].aliveFlg == false)
+				{
+					bullet[b].aliveFlg = true;
+					if (player.scale.x > 0)
+					{
+						bullet[b].move.x = 4;
+						bullet[b].scale.x = 1.5f;
+					}
+					else
+					{
+						bullet[b].move.x = -4;
+						bullet[b].scale.x = -1.5f;
+					}
+					bullet[b].pos = player.pos;
+					break;
+				}
+			}
+			shotWait = 45;
+		}
+	}
 
+	if (shotWait > 0)
+	{
+		shotWait--;
 	}
 
 	if (GetAsyncKeyState('P') & 0x8000)
@@ -171,6 +199,7 @@ void Player::FunnelInit()
 	funnel.scale = { 1.5,1.5 };
 	funnel.alpha = 1.0f;
 	funnel.AnimCnt = 0.0f;
+	funnelWait = 0;
 	m_deg = 0;
 
 	rotateFlg = true;
@@ -232,6 +261,26 @@ void Player::FunnelUpdate()
 	{
 		funnel.move = { 0,0 };
 		funnel.pos += funnel.move;
+
+		if (funnelWait <= 0)
+		{
+			for (int b = 0;b < FunnelBulletNum;b++)
+			{
+				if (fbullet[b].aliveFlg == false)
+				{
+					fbullet[b].aliveFlg = true;
+					fbullet[b].move.x = 4;
+					fbullet[b].pos = funnel.pos;
+					break;
+				}
+			}
+			funnelWait = 60;
+		}
+
+		if (funnelWait > 0)
+		{
+			funnelWait--;
+		}
 	}
 
 	funnel.TransMat = Math::Matrix::CreateTranslation(funnel.pos.x, funnel.pos.y - 5, 0);
@@ -296,6 +345,7 @@ void Player::BulletInit()
 		bullet[b].scale = { 1.5,1.5 };
 		bullet[b].alpha = 1.0f;
 		bullet[b].AnimCnt = 0.0f;
+		bullet[b].aliveFlg = false;
 	}
 
 	BulletTex.Load("Texture/Charge1.png");
@@ -305,17 +355,25 @@ void Player::BulletUpdate()
 {
 	for (int b = 0;b < BulletNum;b++)
 	{
-		bullet[b].AnimCnt += 0.15f;
-		if (bullet[b].AnimCnt > 5)
+		if (bullet[b].aliveFlg == true)
 		{
-			bullet[b].AnimCnt = 0;
-		}
+			bullet[b].AnimCnt += 0.15f;
+			if (bullet[b].AnimCnt > 5)
+			{
+				bullet[b].AnimCnt = 0;
+			}
 
-		bullet[b].pos += bullet[b].move;
+			if (bullet[b].pos.x > 640 || bullet[b].pos.x < -640)
+			{
+				bullet[b].aliveFlg = false;
+			}
+		}
+		bullet[b].pos.x += bullet[b].move.x;
 
 		bullet[b].TransMat = Math::Matrix::CreateTranslation(bullet[b].pos.x, bullet[b].pos.y, 0);
 		bullet[b].ScaleMat = Math::Matrix::CreateScale(bullet[b].scale.x, bullet[b].scale.y, 1);
 		bullet[b].Mat = bullet[b].ScaleMat * bullet[b].TransMat;
+		
 	}
 }
 
@@ -323,7 +381,68 @@ void Player::BulletDraw()
 {
 	for (int b = 0;b < BulletNum;b++)
 	{
-		SHADER.m_spriteShader.SetMatrix(bullet[b].Mat);
-		SHADER.m_spriteShader.DrawTex(&BulletTex, Math::Rectangle{ 64 * (int)bullet[b].AnimCnt,0,64,64}, bullet[b].alpha);
+		if (bullet[b].aliveFlg == true)
+		{
+			SHADER.m_spriteShader.SetMatrix(bullet[b].Mat);
+			SHADER.m_spriteShader.DrawTex(&BulletTex, Math::Rectangle{ 64 * (int)bullet[b].AnimCnt,0,64,64 }, bullet[b].alpha);
+		}
+	}
+}
+
+void Player::FunnelBulletInit()
+{
+	for (int b = 0;b < FunnelBulletNum;b++)
+	{
+		fbullet[b].pos = { 0,0 };
+		fbullet[b].move = { 0,0 };
+		fbullet[b].scale = { 1.0,1.0 };
+		fbullet[b].alpha = 1.0f;
+		fbullet[b].AnimCnt = 0.0f;
+		funneldeg[b] = 0;
+		fbullet[b].aliveFlg = false;
+	}
+}
+
+void Player::FunnelBulletUpdate()
+{
+	for (int b = 0;b < FunnelBulletNum;b++)
+	{
+		if (fbullet[b].aliveFlg == true)
+		{
+			funneldeg[b] += 8;
+			if (funneldeg[b] > 360)
+			{
+				funneldeg[b] = 0;
+			}
+			fbullet[b].AnimCnt += 0.15f;
+			if (fbullet[b].AnimCnt > 5)
+			{
+				fbullet[b].AnimCnt = 0;
+			}
+
+			if (fbullet[b].pos.x > 640)
+			{
+				fbullet[b].aliveFlg = false;
+			}
+		}
+		fbullet[b].pos.x += fbullet[b].move.x;
+
+		fbullet[b].TransMat = Math::Matrix::CreateTranslation(fbullet[b].pos.x, fbullet[b].pos.y, 0);
+		fbullet[b].ScaleMat = Math::Matrix::CreateScale(fbullet[b].scale.x, fbullet[b].scale.y, 1);
+		funnelRoteto = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(funneldeg[b]));
+		fbullet[b].Mat = funnelRoteto * fbullet[b].ScaleMat * fbullet[b].TransMat;
+
+	}
+}
+
+void Player::FunnelBulletDraw()
+{
+	for (int b = 0;b < FunnelBulletNum;b++)
+	{
+		if (fbullet[b].aliveFlg == true)
+		{
+			SHADER.m_spriteShader.SetMatrix(fbullet[b].Mat);
+			SHADER.m_spriteShader.DrawTex(&FunnelTex, Math::Rectangle{ 64 * (int)fbullet[b].AnimCnt,0,32,32 }, fbullet[b].alpha);
+		}
 	}
 }
