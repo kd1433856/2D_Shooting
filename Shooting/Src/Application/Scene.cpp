@@ -9,6 +9,7 @@ void Scene::Draw2D()
 	player.StunDraw();
 	player.BulletDraw();
 	player.FunnelBulletDraw();
+	phoenix.Draw();
 }
 
 void Scene::Update()
@@ -18,16 +19,20 @@ void Scene::Update()
 	player.FunnelUpdate();
 	player.BulletUpdate();
 	player.FunnelBulletUpdate();
+	phoenix.Action();
+	phoenix.Update();
 }
 
 void Scene::Init()
 {
+	srand(time(0));
 	player.Init();
 	player.BoxInit();
 	player.FunnelInit();
 	player.StunInit();
 	player.BulletInit();
 	player.FunnelBulletInit();
+	phoenix.Init();
 }
 
 void Scene::Release()

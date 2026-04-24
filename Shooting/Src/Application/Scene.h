@@ -1,11 +1,13 @@
 #pragma once
 #include"chara.h"
+#include"Enemy/Phoenix.h"
 
 class Scene
 {
 private:
 
 	Player player;
+	Phoenix phoenix;
 
 public:
 

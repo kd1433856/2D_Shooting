@@ -160,6 +160,8 @@
     <ClInclude Include="..\Library\tinygltf\stb_image_write.h" />
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
     <ClInclude Include="Src\Application\chara.h" />
+    <ClInclude Include="Src\Application\Enemy\BaseEnemy.h" />
+    <ClInclude Include="Src\Application\Enemy\Phoenix.h" />
     <ClInclude Include="Src\Application\Scene.h" />
     <ClInclude Include="Src\Application\main.h" />
     <ClInclude Include="Src\System\Audio\KdAudio.h" />
@@ -186,6 +188,8 @@
     <ClCompile Include="..\Library\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Src\Application\chara.cpp" />
+    <ClCompile Include="Src\Application\Enemy\BaseEnemy.cpp" />
+    <ClCompile Include="Src\Application\Enemy\Phoenix.cpp" />
     <ClCompile Include="Src\Application\Scene.cpp" />
     <ClCompile Include="Src\Application\main.cpp" />
     <ClCompile Include="Src\System\Audio\KdAudio.cpp" />
