@@ -48,7 +48,8 @@ public:
 	void FunnelBulletDraw();
 
 	void PlayerEnemyHit();
-	void BulletHit();
+	void BulletHit(int b);
+	void FBulletHit(int b);
 
 	void SetPos(Math::Vector2 pos) { player.pos = pos; }
 	void SetScale(Math::Vector2 scale) { player.scale = scale * 1.5; }
@@ -65,6 +66,13 @@ public:
 	float  GetBulletRadiusX(int b) { return 8.0f * fabs(bullet[b].scale.x); }
 	float  GetBulletRadiusY(int b) { return 4.0f * fabs(bullet[b].scale.y); }
 	int GetBulletNum() { return BulletNum; }
+	bool GetBulletFlg(int b);
+
+	Math::Vector2 GetFBulletPos(int b) { return fbullet[b].pos; }
+	Math::Vector2 GetFBulletScale(int b) { return fbullet[b].scale; }
+	float  GetFBulletRadius(int b) { return 16.0f * fabs(fbullet[b].scale.x); }
+	int GetFBulletNum() { return FunnelBulletNum; }
+	bool GetFBulletFlg(int b);
 
 	void SetOwner(Scene* owner) { m_owner = owner; }
 
@@ -96,6 +104,7 @@ private:
 
 	float shotWait;
 	float funnelWait;
+	float stunWait;
 
 	float movespeed;
 

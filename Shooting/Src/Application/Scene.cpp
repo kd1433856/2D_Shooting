@@ -17,6 +17,7 @@ void Scene::Update()
 		pe_hit.PhoenixHit();
 	}
 	be_hit.PBulletEnemy();
+	be_hit.FBulletEnemy();
 }
 
 void Scene::Init()

@@ -9,6 +9,7 @@ void Player::Init()
 	player.AnimCnt = 0.0f;
 	player.aliveFlg = true;
 	shotWait = 0;
+	stunWait = 0;
 	movespeed = 5;
 	BoxInit();
 	FunnelInit();
@@ -100,6 +101,7 @@ void Player::Update()
 				if (bullet[b].aliveFlg == false)
 				{
 					bullet[b].aliveFlg = true;
+					bullet[b].alpha = 1.0f;
 					if (player.scale.x > 0)
 					{
 						bullet[b].move.x = 4;
@@ -123,14 +125,15 @@ void Player::Update()
 		shotWait--;
 	}
 
-	if (GetAsyncKeyState('P') & 0x8000)
+	if (stun.aliveFlg == true)
 	{
-		stun.aliveFlg = true;
+		stunWait--;
+		if (stunWait < 0)
+		{
+			stun.aliveFlg = false;
+		}
 	}
-	if (GetAsyncKeyState('O') & 0x8000)
-	{
-		stun.aliveFlg = false;
-	}
+
 	if (GetAsyncKeyState('L') & 0x8000)
 	{
 		box.aliveFlg = true;
@@ -383,6 +386,7 @@ void Player::BulletUpdate()
 			if (bullet[b].pos.x > 640 || bullet[b].pos.x < -640)
 			{
 				bullet[b].aliveFlg = false;
+				bullet[b].alpha = 0.0f;
 			}
 
 			bullet[b].pos.x += bullet[b].move.x;
@@ -467,22 +471,53 @@ void Player::FunnelBulletDraw()
 void Player::PlayerEnemyHit()
 {
 	stun.aliveFlg = true;
+	stunWait = 180;
 }
 
-void Player::BulletHit()
+void Player::BulletHit(int b)
 {
-	for (int b = 0;b < BulletNum;b++)
+	if (bullet[b].aliveFlg == true)
 	{
-		if (bullet[b].aliveFlg == true)
-		{
-			bullet[b].aliveFlg = false;
-		}
+		bullet[b].alpha = 0.0f;
+		bullet[b].aliveFlg = false;
+	}
+}
+
+void Player::FBulletHit(int b)
+{
+	if (fbullet[b].aliveFlg == true)
+	{
+		fbullet[b].aliveFlg = false;
 	}
 }
 
 bool Player::GetGard()
 {
 	if (box.aliveFlg == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Player::GetBulletFlg(int b)
+{
+	if (bullet[b].aliveFlg == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Player::GetFBulletFlg(int b)
+{
+	if (fbullet[b].aliveFlg == true)
 	{
 		return true;
 	}

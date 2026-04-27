@@ -164,6 +164,7 @@
     <ClInclude Include="Src\Application\Enemy\Phoenix.h" />
     <ClInclude Include="Src\Application\Hit\BulletEnemy.h" />
     <ClInclude Include="Src\Application\Hit\PlayerEnemy.h" />
+    <ClInclude Include="Src\Application\Hit\Vampire.h" />
     <ClInclude Include="Src\Application\Scene.h" />
     <ClInclude Include="Src\Application\main.h" />
     <ClInclude Include="Src\System\Audio\KdAudio.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Src\Application\Enemy\Phoenix.cpp" />
     <ClCompile Include="Src\Application\Hit\BulletEnemy.cpp" />
     <ClCompile Include="Src\Application\Hit\PlayerEnemy.cpp" />
+    <ClCompile Include="Src\Application\Hit\Vampire.cpp" />
     <ClCompile Include="Src\Application\Scene.cpp" />
     <ClCompile Include="Src\Application\main.cpp" />
     <ClCompile Include="Src\System\Audio\KdAudio.cpp" />

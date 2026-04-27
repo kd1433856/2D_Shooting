@@ -4,12 +4,12 @@ void Phoenix::Init()
 {
 	for(int e=0;e<EnemyNum;e++)
 	{
-		//m_pos[e].x = rand() % 601 + 1280;
-		m_pos[e].x = 0;
-		//m_pos[e].y = rand() % 721 - 360;
-		m_pos[e].y = 0;
-		//m_move[e] = {-6,0};
-		m_move[e] = {0,0};
+		m_pos[e].x = rand() % 601 + 1280;
+		//m_pos[e].x = 200;
+		m_pos[e].y = rand() % 721 - 360;
+		//m_pos[e].y = 0;
+		m_move[e] = {-6,0};
+		//m_move[e] = {0,0};
 		m_scale[e] = {-2.5,2.5};
 		aliveFlg[e] = true;
 		AnimCnt[e] = 0;
@@ -53,10 +53,19 @@ void Phoenix::Release()
 	EnemyTex.Release();
 }
 
-void Phoenix::B_PhoenixHit()
+void Phoenix::B_PhoenixHit(int e)
 {
-	for (int e = 0;e < EnemyNum;e++)
+	aliveFlg[e] = false;
+}
+
+bool Phoenix::GetAliveFlg(int e)
+{
+	if (aliveFlg[e] == true)
 	{
-		aliveFlg[e] = true;
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }

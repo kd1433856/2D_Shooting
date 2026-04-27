@@ -23,28 +23,31 @@ void PlayerEnemy::PhoenixHit()
 		const float phoenixTop = phoenix->GetPos(e).y + phoenix->GetRadius(e);
 		const float phoenixBottom = phoenix->GetPos(e).y - phoenix->GetRadius(e);
 
-		//プレイヤーとブロックが縦で重なっているか
-		if (playerRight > phoenixLeft && playerLeft < phoenixRight)
+		if (phoenix->GetAliveFlg(e) == true)
 		{
-			if (nextBottom<phoenixTop && nextTop>phoenixTop)
+			//プレイヤーとブロックが縦で重なっているか
+			if (playerRight > phoenixLeft && playerLeft < phoenixRight)
 			{
-				player->PlayerEnemyHit();
+				if (nextBottom<phoenixTop && nextTop>phoenixTop)
+				{
+					player->PlayerEnemyHit();
+				}
+				else if (phoenixBottom < nextTop && nextBottom < phoenixBottom)
+				{
+					player->PlayerEnemyHit();
+				}
 			}
-			else if (phoenixBottom < nextTop && nextBottom < phoenixBottom)
+			//プレイヤーとブロックが横で重なっているか
+			if (playerTop > phoenixBottom && playerBottom < phoenixTop)
 			{
-				player->PlayerEnemyHit();
-			}
-		}
-		//プレイヤーとブロックが横で重なっているか
-		if (playerTop > phoenixBottom && playerBottom < phoenixTop)
-		{
-			if (nextLeft < phoenixRight && nextRight > phoenixRight)
-			{
-				player->PlayerEnemyHit();
-			}
-			else if (phoenixLeft < nextRight && nextLeft < phoenixLeft)
-			{
-				player->PlayerEnemyHit();
+				if (nextLeft < phoenixRight && nextRight > phoenixRight)
+				{
+					player->PlayerEnemyHit();
+				}
+				else if (phoenixLeft < nextRight && nextLeft < phoenixLeft)
+				{
+					player->PlayerEnemyHit();
+				}
 			}
 		}
 	}

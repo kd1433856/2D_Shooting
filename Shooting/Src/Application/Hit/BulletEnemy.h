@@ -10,6 +10,7 @@ public:
 	~BulletEnemy() {}
 
 	void PBulletEnemy();
+	void FBulletEnemy();
 
 	void SetOwner(Scene* owner) { m_owner = owner; }
 
