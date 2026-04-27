@@ -384,13 +384,13 @@ void Player::BulletUpdate()
 			{
 				bullet[b].aliveFlg = false;
 			}
-		}
-		bullet[b].pos.x += bullet[b].move.x;
 
-		bullet[b].TransMat = Math::Matrix::CreateTranslation(bullet[b].pos.x, bullet[b].pos.y, 0);
-		bullet[b].ScaleMat = Math::Matrix::CreateScale(bullet[b].scale.x, bullet[b].scale.y, 1);
-		bullet[b].Mat = bullet[b].ScaleMat * bullet[b].TransMat;
-		
+			bullet[b].pos.x += bullet[b].move.x;
+
+			bullet[b].TransMat = Math::Matrix::CreateTranslation(bullet[b].pos.x, bullet[b].pos.y, 0);
+			bullet[b].ScaleMat = Math::Matrix::CreateScale(bullet[b].scale.x, bullet[b].scale.y, 1);
+			bullet[b].Mat = bullet[b].ScaleMat * bullet[b].TransMat;
+		}
 	}
 }
 
@@ -467,6 +467,17 @@ void Player::FunnelBulletDraw()
 void Player::PlayerEnemyHit()
 {
 	stun.aliveFlg = true;
+}
+
+void Player::BulletHit()
+{
+	for (int b = 0;b < BulletNum;b++)
+	{
+		if (bullet[b].aliveFlg == true)
+		{
+			bullet[b].aliveFlg = false;
+		}
+	}
 }
 
 bool Player::GetGard()

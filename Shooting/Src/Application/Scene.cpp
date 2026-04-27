@@ -16,11 +16,13 @@ void Scene::Update()
 	{
 		pe_hit.PhoenixHit();
 	}
+	be_hit.PBulletEnemy();
 }
 
 void Scene::Init()
 {
 	pe_hit.SetOwner(this);
+	be_hit.SetOwner(this);
 	player.SetOwner(this);
 	srand(time(0));
 	player.Init();

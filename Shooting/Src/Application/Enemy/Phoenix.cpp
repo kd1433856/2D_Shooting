@@ -40,12 +40,23 @@ void Phoenix::Draw()
 {
 	for (int e = 0;e < EnemyNum;e++)
 	{
-		SHADER.m_spriteShader.SetMatrix(Mat[e]);
-		SHADER.m_spriteShader.DrawTex(&EnemyTex, Math::Rectangle(64 * (int)AnimCnt[e], 64, 64, 64), 1.0f);
+		if(aliveFlg[e] == true)
+		{
+			SHADER.m_spriteShader.SetMatrix(Mat[e]);
+			SHADER.m_spriteShader.DrawTex(&EnemyTex, Math::Rectangle(64 * (int)AnimCnt[e], 64, 64, 64), 1.0f);
+		}
 	}
 }
 
 void Phoenix::Release()
 {
 	EnemyTex.Release();
+}
+
+void Phoenix::B_PhoenixHit()
+{
+	for (int e = 0;e < EnemyNum;e++)
+	{
+		aliveFlg[e] = true;
+	}
 }

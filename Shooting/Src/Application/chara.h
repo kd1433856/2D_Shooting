@@ -48,6 +48,7 @@ public:
 	void FunnelBulletDraw();
 
 	void PlayerEnemyHit();
+	void BulletHit();
 
 	void SetPos(Math::Vector2 pos) { player.pos = pos; }
 	void SetScale(Math::Vector2 scale) { player.scale = scale * 1.5; }
@@ -63,6 +64,7 @@ public:
 	Math::Vector2 GetBulletScale(int b) { return bullet[b].scale; }
 	float  GetBulletRadiusX(int b) { return 8.0f * fabs(bullet[b].scale.x); }
 	float  GetBulletRadiusY(int b) { return 4.0f * fabs(bullet[b].scale.y); }
+	int GetBulletNum() { return BulletNum; }
 
 	void SetOwner(Scene* owner) { m_owner = owner; }
 

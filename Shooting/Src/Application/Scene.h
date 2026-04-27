@@ -2,6 +2,7 @@
 #include"chara.h"
 #include"Enemy/Phoenix.h"
 #include"Hit/PlayerEnemy.h"
+#include"Hit/BulletEnemy.h"
 
 class Scene
 {
@@ -10,6 +11,7 @@ private:
 	Player player;
 	Phoenix phoenix;
 	PlayerEnemy pe_hit;
+	BulletEnemy be_hit;
 
 public:
 
