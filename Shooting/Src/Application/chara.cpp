@@ -10,6 +10,11 @@ void Player::Init()
 	player.aliveFlg = true;
 	shotWait = 0;
 	movespeed = 5;
+	BoxInit();
+	FunnelInit();
+	StunInit();
+	BulletInit();
+	FunnelBulletInit();
 
 	CharaTex.Load("Texture/WitchFlying.png");
 }
@@ -140,6 +145,12 @@ void Player::Update()
 	player.TransMat = Math::Matrix::CreateTranslation(player.pos.x, player.pos.y, 0);
 	player.ScaleMat = Math::Matrix::CreateScale(player.scale.x, player.scale.y, 1);
 	player.Mat = player.ScaleMat * player.TransMat;
+
+	BoxUpdate();
+	FunnelUpdate();
+	StunUpdate();
+	BulletUpdate();
+	FunnelBulletUpdate();
 }
 
 void Player::Draw()
@@ -147,6 +158,11 @@ void Player::Draw()
 	SHADER.m_spriteShader.SetMatrix(player.Mat);
 	//const Math::Color color = { RGB_r,RGB_g,RGB_b,player.alpha };
 	SHADER.m_spriteShader.DrawTex(&CharaTex, Math::Rectangle{ 48 * (int)player.AnimCnt,0,48,64 }, 1.0f);
+	BoxDraw();
+	FunnelDraw();
+	StunDraw();
+	BulletDraw();
+	FunnelBulletDraw();
 }
 
 void Player::Release()
@@ -155,6 +171,7 @@ void Player::Release()
 	BoxTex.Release();
 	FunnelTex.Release();
 	StunTex.Release();
+	BulletTex.Release();
 }
 
 void Player::BoxInit()
@@ -444,5 +461,22 @@ void Player::FunnelBulletDraw()
 			SHADER.m_spriteShader.SetMatrix(fbullet[b].Mat);
 			SHADER.m_spriteShader.DrawTex(&FunnelTex, Math::Rectangle{ 64 * (int)fbullet[b].AnimCnt,0,32,32 }, fbullet[b].alpha);
 		}
+	}
+}
+
+void Player::PlayerEnemyHit()
+{
+	stun.aliveFlg = true;
+}
+
+bool Player::GetGard()
+{
+	if (box.aliveFlg == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }

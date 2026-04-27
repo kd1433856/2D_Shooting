@@ -5,9 +5,18 @@ class Phoenix :public BaseEnemy
 {
 public:
 
+	Phoenix() {}
+	~Phoenix() {}
+
 	virtual void Init();
 	void Action();
 	virtual void Draw();
+	virtual void Release();
+
+	Math::Vector2 GetPos(int e) { return m_pos[e]; }
+	Math::Vector2 GetScale(int e) { return m_scale[e]; }
+	float  GetRadius(int e) { return 7.0f * fabs(m_scale[e].x); }
+	int GetNum() { return EnemyNum; }
 
 private:
 

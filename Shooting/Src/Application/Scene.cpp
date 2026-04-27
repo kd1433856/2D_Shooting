@@ -4,40 +4,33 @@
 void Scene::Draw2D()
 {
 	player.Draw();
-	player.FunnelDraw();
-	player.BoxDraw();
-	player.StunDraw();
-	player.BulletDraw();
-	player.FunnelBulletDraw();
 	phoenix.Draw();
 }
 
 void Scene::Update()
 {
 	player.Update();
-	player.BoxUpdate();
-	player.FunnelUpdate();
-	player.BulletUpdate();
-	player.FunnelBulletUpdate();
 	phoenix.Action();
 	phoenix.Update();
+	if (player.GetGard() == false)
+	{
+		pe_hit.PhoenixHit();
+	}
 }
 
 void Scene::Init()
 {
+	pe_hit.SetOwner(this);
+	player.SetOwner(this);
 	srand(time(0));
 	player.Init();
-	player.BoxInit();
-	player.FunnelInit();
-	player.StunInit();
-	player.BulletInit();
-	player.FunnelBulletInit();
 	phoenix.Init();
 }
 
 void Scene::Release()
 {
-	
+	player.Release();
+	phoenix.Release();
 }
 
 void Scene::ImGuiUpdate()

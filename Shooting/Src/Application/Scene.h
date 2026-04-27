@@ -1,6 +1,7 @@
 #pragma once
 #include"chara.h"
 #include"Enemy/Phoenix.h"
+#include"Hit/PlayerEnemy.h"
 
 class Scene
 {
@@ -8,6 +9,7 @@ private:
 
 	Player player;
 	Phoenix phoenix;
+	PlayerEnemy pe_hit;
 
 public:
 
@@ -25,6 +27,9 @@ public:
 
 	// GUIèàóù
 	void ImGuiUpdate();
+
+	Player* GetPlayer() { return &player; }
+	Phoenix* GetPhoenix() { return &phoenix; }
 
 private:
 
