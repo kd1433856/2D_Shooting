@@ -1,6 +1,7 @@
 #pragma once
-#include"chara.h"
+#include"Player.h"
 #include"Enemy/Phoenix.h"
+#include"Enemy/Evil.h"
 #include"Hit/PlayerEnemy.h"
 #include"Hit/BulletEnemy.h"
 
@@ -10,6 +11,7 @@ private:
 
 	Player player;
 	Phoenix phoenix;
+	Evil evil;
 	PlayerEnemy pe_hit;
 	BulletEnemy be_hit;
 
@@ -32,6 +34,7 @@ public:
 
 	Player* GetPlayer() { return &player; }
 	Phoenix* GetPhoenix() { return &phoenix; }
+	Evil* GetEvil() { return &evil; }
 
 private:
 

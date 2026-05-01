@@ -10,12 +10,13 @@ void BulletEnemy::PBulletEnemy()
 	{
 		for (int b = 0;b < player->GetBulletNum();b++)
 		{
-			const float x = phoenix->GetPos(e).x - player->GetBulletPos(b).x + 10;
+			Math::Vector2 hitpos = player->GetBulletPos(b) - phoenix->GetPos(e);
+			/*const float x = phoenix->GetPos(e).x - player->GetBulletPos(b).x + 10;
 			const float y = phoenix->GetPos(e).y - player->GetBulletPos(b).y;
 			const float z = sqrt(x * x + y * y);
-			const float sum = phoenix->GetRadius(e) + player->GetBulletRadiusX(e);
+			const float sum = phoenix->GetRadius(e) + player->GetBulletRadiusX(e);*/
 
-			if (z < sum)
+			if (hitpos.Length() < 30)
 			{
 				if(phoenix->GetAliveFlg(e)==true)
 				{
@@ -39,19 +40,20 @@ void BulletEnemy::FBulletEnemy()
 	{
 		for (int b = 0;b < player->GetFBulletNum();b++)
 		{
-			const float x = phoenix->GetPos(e).x - player->GetFBulletPos(b).x + 10;
+			Math::Vector2 hitpos = player->GetFBulletPos(b) - phoenix->GetPos(e);
+			/*const float x = phoenix->GetPos(e).x - player->GetFBulletPos(b).x + 10;
 			const float y = phoenix->GetPos(e).y - player->GetFBulletPos(b).y;
 			const float z = sqrt(x * x + y * y);
-			const float sum = phoenix->GetRadius(e) + player->GetFBulletRadius(e);
+			const float sum = phoenix->GetRadius(e) + player->GetFBulletRadius(e);*/
 
-			if (z < sum)
+			if (hitpos.Length() < 30)
 			{
 				if (phoenix->GetAliveFlg(e) == true)
 				{
 					if (player->GetFBulletFlg(b) == true)
 					{
-						player->FBulletHit(b);
 						phoenix->B_PhoenixHit(e);
+						player->FBulletHit(b);
 						break;
 					}
 				}

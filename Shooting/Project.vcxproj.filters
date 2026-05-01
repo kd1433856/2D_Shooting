@@ -144,7 +144,7 @@
     <ClInclude Include="Src\Application\Scene.h">
       <Filter>Src\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\chara.h">
+    <ClInclude Include="Src\Application\Player.h">
       <Filter>Src\Application</Filter>
     </ClInclude>
     <ClInclude Include="Src\Application\Enemy\Phoenix.h">
@@ -159,7 +159,7 @@
     <ClInclude Include="Src\Application\Hit\BulletEnemy.h">
       <Filter>Src\Application\Hit</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Enemy\Vampire.h">
+    <ClInclude Include="Src\Application\Enemy\Evil.h">
       <Filter>Src\Application\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
@@ -227,7 +227,7 @@
     <ClCompile Include="Src\Application\Scene.cpp">
       <Filter>Src\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\chara.cpp">
+    <ClCompile Include="Src\Application\Player.cpp">
       <Filter>Src\Application</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\Enemy\Phoenix.cpp">
@@ -242,7 +242,7 @@
     <ClCompile Include="Src\Application\Hit\BulletEnemy.cpp">
       <Filter>Src\Application\Hit</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\Enemy\Vampire.cpp">
+    <ClCompile Include="Src\Application\Enemy\Evil.cpp">
       <Filter>Src\Application\Enemy</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,4 +1,4 @@
-#include "chara.h"
+#include "Player.h"
 
 void Player::Init()
 {
@@ -43,7 +43,7 @@ void Player::Update()
 		StunUpdate();
 	}
 
-	if (GetAsyncKeyState('W') & 0x8000)
+	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
 		if (stun.aliveFlg == false)
 		{
@@ -54,7 +54,7 @@ void Player::Update()
 			player.move.y = -movespeed;
 		}
 	}
-	if (GetAsyncKeyState('A') & 0x8000)
+	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 	{
 		if (stun.aliveFlg == false)
 		{
@@ -67,7 +67,7 @@ void Player::Update()
 			player.scale.x = 1.5;
 		}
 	}
-	if (GetAsyncKeyState('S') & 0x8000)
+	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 	{
 		if (stun.aliveFlg == false)
 		{
@@ -78,7 +78,7 @@ void Player::Update()
 			player.move.y = movespeed;
 		}
 	}
-	if (GetAsyncKeyState('D') & 0x8000)
+	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
 		if (stun.aliveFlg == false)
 		{
@@ -134,7 +134,7 @@ void Player::Update()
 		}
 	}
 
-	if (GetAsyncKeyState('L') & 0x8000)
+	if (GetAsyncKeyState('S') & 0x8000)
 	{
 		box.aliveFlg = true;
 	}
@@ -237,7 +237,7 @@ void Player::FunnelUpdate()
 		funnel.AnimCnt = 0;
 	}
 
-	if (GetAsyncKeyState('K') & 0x8000)
+	if (GetAsyncKeyState('A') & 0x8000)
 	{
 
 		if (starFlg == true)	//’·‰Ÿ‚µ–hŽ~

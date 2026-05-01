@@ -5,6 +5,7 @@ void Scene::Draw2D()
 {
 	player.Draw();
 	phoenix.Draw();
+	evil.Draw();
 }
 
 void Scene::Update()
@@ -12,6 +13,8 @@ void Scene::Update()
 	player.Update();
 	phoenix.Action();
 	phoenix.Update();
+	evil.Action();
+	evil.Update();
 	if (player.GetGard() == false)
 	{
 		pe_hit.PhoenixHit();
@@ -28,12 +31,14 @@ void Scene::Init()
 	srand(time(0));
 	player.Init();
 	phoenix.Init();
+	evil.Init();
 }
 
 void Scene::Release()
 {
 	player.Release();
 	phoenix.Release();
+	evil.Release();
 }
 
 void Scene::ImGuiUpdate()

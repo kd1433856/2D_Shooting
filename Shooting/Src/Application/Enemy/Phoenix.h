@@ -10,6 +10,7 @@ public:
 
 	virtual void Init();
 	void Action();
+	virtual void Update();
 	virtual void Draw();
 	virtual void Release();
 

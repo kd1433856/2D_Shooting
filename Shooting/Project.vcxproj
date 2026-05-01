@@ -159,10 +159,10 @@
     <ClInclude Include="..\Library\tinygltf\stb_image.h" />
     <ClInclude Include="..\Library\tinygltf\stb_image_write.h" />
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
-    <ClInclude Include="Src\Application\chara.h" />
+    <ClInclude Include="Src\Application\Player.h" />
     <ClInclude Include="Src\Application\Enemy\BaseEnemy.h" />
     <ClInclude Include="Src\Application\Enemy\Phoenix.h" />
-    <ClInclude Include="Src\Application\Enemy\Vampire.h" />
+    <ClInclude Include="Src\Application\Enemy\Evil.h" />
     <ClInclude Include="Src\Application\Hit\BulletEnemy.h" />
     <ClInclude Include="Src\Application\Hit\PlayerEnemy.h" />
     <ClInclude Include="Src\Application\Scene.h" />
@@ -190,10 +190,10 @@
     <ClCompile Include="..\Library\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="Src\Application\chara.cpp" />
+    <ClCompile Include="Src\Application\Player.cpp" />
     <ClCompile Include="Src\Application\Enemy\BaseEnemy.cpp" />
     <ClCompile Include="Src\Application\Enemy\Phoenix.cpp" />
-    <ClCompile Include="Src\Application\Enemy\Vampire.cpp" />
+    <ClCompile Include="Src\Application\Enemy\Evil.cpp" />
     <ClCompile Include="Src\Application\Hit\BulletEnemy.cpp" />
     <ClCompile Include="Src\Application\Hit\PlayerEnemy.cpp" />
     <ClCompile Include="Src\Application\Scene.cpp" />
