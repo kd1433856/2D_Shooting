@@ -52,3 +52,55 @@ void PlayerEnemy::PhoenixHit()
 		}
 	}
 }
+
+void PlayerEnemy::EvilHit()
+{
+	Player* player = m_owner->GetPlayer();
+	Evil* evil = m_owner->GetEvil();
+
+	const float playerRight = player->GetPos().x + player->GetRadiusX();
+	const float playerLeft = player->GetPos().x - player->GetRadiusX();
+	const float playerTop = player->GetPos().y + player->GetRadiusY();
+	const float playerBottom = player->GetPos().y - player->GetRadiusY();
+
+	const float nextRight = player->GetFuturePos().x + player->GetRadiusX();
+	const float nextLeft = player->GetFuturePos().x - player->GetRadiusX();
+	const float nextTop = player->GetFuturePos().y + player->GetRadiusY();
+	const float nextBottom = player->GetFuturePos().y - player->GetRadiusY();
+
+	for (int e = 0; e < evil->GetNum(); e++)
+	{
+		const float evilRight = evil->GetPos(e).x + evil->GetRadius(e);
+		const float evilLeft = evil->GetPos(e).x - evil->GetRadius(e);
+		const float evilTop = evil->GetPos(e).y + evil->GetRadius(e);
+		const float evilBottom = evil->GetPos(e).y - evil->GetRadius(e);
+
+		if (evil->GetAliveFlg(e) == true)
+		{
+			//プレイヤーとブロックが縦で重なっているか
+			if (playerRight > evilLeft && playerLeft < evilRight)
+			{
+				if (nextBottom<evilTop && nextTop>evilTop)
+				{
+					player->PlayerEnemyHit();
+				}
+				else if (evilBottom < nextTop && nextBottom < evilBottom)
+				{
+					player->PlayerEnemyHit();
+				}
+			}
+			//プレイヤーとブロックが横で重なっているか
+			if (playerTop > evilBottom && playerBottom < evilTop)
+			{
+				if (nextLeft < evilRight && nextRight > evilRight)
+				{
+					player->PlayerEnemyHit();
+				}
+				else if (evilLeft < nextRight && nextLeft < evilLeft)
+				{
+					player->PlayerEnemyHit();
+				}
+			}
+		}
+	}
+}

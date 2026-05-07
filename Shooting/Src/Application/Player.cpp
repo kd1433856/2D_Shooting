@@ -43,6 +43,11 @@ void Player::Update()
 		StunUpdate();
 	}
 
+	if (player.pos.x <= -600)player.pos.x = -600;
+	if (player.pos.x >= 600)player.pos.x = 600;
+	if (player.pos.y <= -320)player.pos.y = -320;
+	if (player.pos.y >= 330)player.pos.y = 330;
+
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
 		if (stun.aliveFlg == false)
@@ -94,29 +99,32 @@ void Player::Update()
 
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
-		if(shotWait<=0)
+		if (box.aliveFlg == false)
 		{
-			for (int b = 0;b < BulletNum;b++)
+			if (shotWait <= 0)
 			{
-				if (bullet[b].aliveFlg == false)
+				for (int b = 0;b < BulletNum;b++)
 				{
-					bullet[b].aliveFlg = true;
-					bullet[b].alpha = 1.0f;
-					if (player.scale.x > 0)
+					if (bullet[b].aliveFlg == false)
 					{
-						bullet[b].move.x = 4;
-						bullet[b].scale.x = 1.5f;
+						bullet[b].aliveFlg = true;
+						bullet[b].alpha = 1.0f;
+						if (player.scale.x > 0)
+						{
+							bullet[b].move.x = 4;
+							bullet[b].scale.x = 1.5f;
+						}
+						else
+						{
+							bullet[b].move.x = -4;
+							bullet[b].scale.x = -1.5f;
+						}
+						bullet[b].pos = player.pos;
+						break;
 					}
-					else
-					{
-						bullet[b].move.x = -4;
-						bullet[b].scale.x = -1.5f;
-					}
-					bullet[b].pos = player.pos;
-					break;
 				}
+				shotWait = 45;
 			}
-			shotWait = 45;
 		}
 	}
 
@@ -281,7 +289,10 @@ void Player::FunnelUpdate()
 	{
 		funnel.move = { 0,0 };
 		funnel.pos += funnel.move;
+	}
 
+	if (box.aliveFlg == false)
+	{
 		if (funnelWait <= 0)
 		{
 			for (int b = 0;b < FunnelBulletNum;b++)
@@ -488,6 +499,18 @@ void Player::FBulletHit(int b)
 	if (fbullet[b].aliveFlg == true)
 	{
 		fbullet[b].aliveFlg = false;
+	}
+}
+
+bool Player::GetAliveFlg()
+{
+	if (player.aliveFlg == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 

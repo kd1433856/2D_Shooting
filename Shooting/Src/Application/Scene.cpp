@@ -18,9 +18,13 @@ void Scene::Update()
 	if (player.GetGard() == false)
 	{
 		pe_hit.PhoenixHit();
+		pe_hit.EvilHit();
+		be_hit.EvilBulletHit();
 	}
-	be_hit.PBulletEnemy();
-	be_hit.FBulletEnemy();
+	be_hit.PBulletPhoenix();
+	be_hit.FBulletPhoenix();
+	be_hit.PBulletEvil();
+	be_hit.FBulletEvil();
 }
 
 void Scene::Init()

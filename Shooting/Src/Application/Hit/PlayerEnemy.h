@@ -10,6 +10,7 @@ public:
 	~PlayerEnemy() {}
 
 	void PhoenixHit();
+	void EvilHit();
 
 	void SetOwner(Scene* owner) { m_owner = owner; }
 

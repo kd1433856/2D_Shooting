@@ -59,6 +59,7 @@ public:
 	Math::Vector2 GetFuturePos() { return player.pos + player.move; }
 	float  GetRadiusX() { return 22.0f * fabs(player.scale.x); }
 	float  GetRadiusY() { return 20.0f * fabs(player.scale.y); }
+	bool GetAliveFlg();
 	bool GetGard();
 
 	Math::Vector2 GetBulletPos(int b) { return bullet[b].pos; }

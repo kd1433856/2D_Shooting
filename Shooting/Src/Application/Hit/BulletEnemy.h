@@ -9,8 +9,13 @@ public:
 	BulletEnemy() {}
 	~BulletEnemy() {}
 
-	void PBulletEnemy();
-	void FBulletEnemy();
+	void PBulletPhoenix();
+	void FBulletPhoenix();
+
+	void PBulletEvil();
+	void FBulletEvil();
+
+	void EvilBulletHit();
 
 	void SetOwner(Scene* owner) { m_owner = owner; }
 
