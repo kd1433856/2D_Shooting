@@ -11,7 +11,7 @@ public:
 
 protected:
 
-	static const int EnemyNum = 10;
+	static const int EnemyNum = 30;
 	KdTexture EnemyTex;
 	Math::Vector2 m_pos[EnemyNum];
 	Math::Vector2 m_move[EnemyNum];
@@ -21,4 +21,5 @@ protected:
 	Math::Matrix TransMat[EnemyNum];
 	bool aliveFlg[EnemyNum];
 	float AnimCnt[EnemyNum];
+	float repop;
 };

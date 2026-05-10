@@ -1,6 +1,6 @@
 #pragma once
 
-class Scene;
+class GameScene;
 
 class BulletEnemy
 {
@@ -17,10 +17,17 @@ public:
 
 	void EvilBulletHit();
 
-	void SetOwner(Scene* owner) { m_owner = owner; }
+	void PBulletBoss();
+	void FBulletBoss();
+
+	void BossBulletHit();
+	void BossArrowHit();
+	void BossRainHit();
+
+	void SetOwner(GameScene* owner) { m_owner = owner; }
 
 private:
 
-	Scene* m_owner;
+	GameScene* m_owner;
 
 };

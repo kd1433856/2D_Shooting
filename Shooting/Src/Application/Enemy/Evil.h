@@ -15,6 +15,7 @@ public:
 	virtual void Release();
 
 	void B_EvilHit(int e);
+	void Repop(int e);
 
 	void BulletInit();
 	void BulletUpdate();
@@ -32,7 +33,7 @@ public:
 
 private:
 
-	static const int EvilNum = 10;
+	static const int EvilNum = 30;
 	bool EvilmoveFlg[EvilNum];
 	int m_posgap[EvilNum];
 	float m_aliveTime[EvilNum];
@@ -42,7 +43,7 @@ private:
 
 	KdTexture m_BulletTex;
 
-	static const int EvilBulletNum = 10;
+	static const int EvilBulletNum = 30;
 	Math::Vector2 m_buPos[EvilBulletNum];
 	Math::Vector2 m_buMove[EvilBulletNum];
 	Math::Vector2 m_buScale[EvilBulletNum];

@@ -13,6 +13,7 @@ void Phoenix::Init()
 		m_scale[e] = {-2.5,2.5};
 		aliveFlg[e] = true;
 		AnimCnt[e] = 0;
+		repop = 0;
 	}
 
 	EnemyTex.Load("Texture/Phoenixling Sprite Sheet.png");
@@ -22,6 +23,7 @@ void Phoenix::Action()
 {
 	for(int e=0;e<EnemyNum;e++)
 	{
+		repop = rand() % 100 + 1;
 		if (aliveFlg[e] == true)
 		{
 			AnimCnt[e] += 0.3f;
@@ -34,6 +36,18 @@ void Phoenix::Action()
 			{
 				m_pos[e].x = rand() % 401 + 1260;
 				m_pos[e].y = rand() % 721 - 360;
+			}
+		}
+
+		if (repop < 5)
+		{
+			if (aliveFlg[e] == false)
+			{
+				aliveFlg[e] = true;
+				m_pos[e].x = rand() % 401 + 1260;
+				m_pos[e].y = rand() % 721 - 360;
+				AnimCnt[e] = 0;
+				break;
 			}
 		}
 	}
@@ -74,6 +88,14 @@ void Phoenix::Release()
 void Phoenix::B_PhoenixHit(int e)
 {
 	aliveFlg[e] = false;
+}
+
+void Phoenix::Repop(int e)
+{
+	aliveFlg[e] = true;
+	m_pos[e].x = rand() % 401 + 1260;
+	m_pos[e].y = rand() % 721 - 360;
+	AnimCnt[e] = 0;
 }
 
 bool Phoenix::GetAliveFlg(int e)

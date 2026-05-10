@@ -1,48 +1,26 @@
 #include "main.h"
 #include "Scene.h"
+#include"SceneManager.h"
 
 void Scene::Draw2D()
 {
-	player.Draw();
-	phoenix.Draw();
-	evil.Draw();
+	SCENEMANAGER.Draw();
 }
 
 void Scene::Update()
 {
-	player.Update();
-	phoenix.Action();
-	phoenix.Update();
-	evil.Action();
-	evil.Update();
-	if (player.GetGard() == false)
-	{
-		pe_hit.PhoenixHit();
-		pe_hit.EvilHit();
-		be_hit.EvilBulletHit();
-	}
-	be_hit.PBulletPhoenix();
-	be_hit.FBulletPhoenix();
-	be_hit.PBulletEvil();
-	be_hit.FBulletEvil();
+	SCENEMANAGER.Update();
 }
 
 void Scene::Init()
 {
-	pe_hit.SetOwner(this);
-	be_hit.SetOwner(this);
-	player.SetOwner(this);
-	srand(time(0));
-	player.Init();
-	phoenix.Init();
-	evil.Init();
+	SCENEMANAGER.ChangeState(new TitleScene());
+	SCENEMANAGER.Init();
 }
 
 void Scene::Release()
 {
-	player.Release();
-	phoenix.Release();
-	evil.Release();
+	SCENEMANAGER.Release();
 }
 
 void Scene::ImGuiUpdate()

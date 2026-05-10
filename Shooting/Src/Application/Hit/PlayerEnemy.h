@@ -1,6 +1,6 @@
 #pragma once
 
-class Scene;
+class GameScene;
 
 class PlayerEnemy
 {
@@ -11,11 +11,13 @@ public:
 
 	void PhoenixHit();
 	void EvilHit();
+	void GhostHit();
+	void BossHit();
 
-	void SetOwner(Scene* owner) { m_owner = owner; }
+	void SetOwner(GameScene* owner) { m_owner = owner; }
 
 private:
 
-	Scene* m_owner;
+	GameScene* m_owner;
 
 };

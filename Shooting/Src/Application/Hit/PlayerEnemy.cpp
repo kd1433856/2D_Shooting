@@ -1,5 +1,5 @@
 #include "PlayerEnemy.h"
-#include"../Scene.h"
+#include"../GameScene.h"
 
 void PlayerEnemy::PhoenixHit()
 {
@@ -30,11 +30,11 @@ void PlayerEnemy::PhoenixHit()
 			{
 				if (nextBottom<phoenixTop && nextTop>phoenixTop)
 				{
-					player->PlayerEnemyHit();
+					player->PlayerPhoenixHit();
 				}
 				else if (phoenixBottom < nextTop && nextBottom < phoenixBottom)
 				{
-					player->PlayerEnemyHit();
+					player->PlayerPhoenixHit();
 				}
 			}
 			//プレイヤーとブロックが横で重なっているか
@@ -42,11 +42,11 @@ void PlayerEnemy::PhoenixHit()
 			{
 				if (nextLeft < phoenixRight && nextRight > phoenixRight)
 				{
-					player->PlayerEnemyHit();
+					player->PlayerPhoenixHit();
 				}
 				else if (phoenixLeft < nextRight && nextLeft < phoenixLeft)
 				{
-					player->PlayerEnemyHit();
+					player->PlayerPhoenixHit();
 				}
 			}
 		}
@@ -82,11 +82,11 @@ void PlayerEnemy::EvilHit()
 			{
 				if (nextBottom<evilTop && nextTop>evilTop)
 				{
-					player->PlayerEnemyHit();
+					player->PlayerEvilHit();
 				}
 				else if (evilBottom < nextTop && nextBottom < evilBottom)
 				{
-					player->PlayerEnemyHit();
+					player->PlayerEvilHit();
 				}
 			}
 			//プレイヤーとブロックが横で重なっているか
@@ -94,12 +94,113 @@ void PlayerEnemy::EvilHit()
 			{
 				if (nextLeft < evilRight && nextRight > evilRight)
 				{
-					player->PlayerEnemyHit();
+					player->PlayerEvilHit();
 				}
 				else if (evilLeft < nextRight && nextLeft < evilLeft)
 				{
-					player->PlayerEnemyHit();
+					player->PlayerEvilHit();
 				}
+			}
+		}
+	}
+}
+
+void PlayerEnemy::GhostHit()
+{
+	Player* player = m_owner->GetPlayer();
+	Ghost* ghost = m_owner->GetGhost();
+
+	const float playerRight = player->GetPos().x + player->GetRadiusX();
+	const float playerLeft = player->GetPos().x - player->GetRadiusX();
+	const float playerTop = player->GetPos().y + player->GetRadiusY();
+	const float playerBottom = player->GetPos().y - player->GetRadiusY();
+
+	const float nextRight = player->GetFuturePos().x + player->GetRadiusX();
+	const float nextLeft = player->GetFuturePos().x - player->GetRadiusX();
+	const float nextTop = player->GetFuturePos().y + player->GetRadiusY();
+	const float nextBottom = player->GetFuturePos().y - player->GetRadiusY();
+
+	for (int e = 0; e < ghost->GetNum(); e++)
+	{
+		const float ghostRight = ghost->GetPos(e).x + ghost->GetRadius(e);
+		const float ghostLeft = ghost->GetPos(e).x - ghost->GetRadius(e);
+		const float ghostTop = ghost->GetPos(e).y + ghost->GetRadius(e);
+		const float ghostBottom = ghost->GetPos(e).y - ghost->GetRadius(e);
+
+		if (ghost->GetAliveFlg(e) == true)
+		{
+			//プレイヤーとブロックが縦で重なっているか
+			if (playerRight > ghostLeft && playerLeft < ghostRight)
+			{
+				if (nextBottom<ghostTop && nextTop>ghostTop)
+				{
+					player->PlayerGhostHit();
+				}
+				else if (ghostBottom < nextTop && nextBottom < ghostBottom)
+				{
+					player->PlayerGhostHit();
+				}
+			}
+			//プレイヤーとブロックが横で重なっているか
+			if (playerTop > ghostBottom && playerBottom < ghostTop)
+			{
+				if (nextLeft < ghostRight && nextRight > ghostRight)
+				{
+					player->PlayerGhostHit();
+				}
+				else if (ghostLeft < nextRight && nextLeft < ghostLeft)
+				{
+					player->PlayerGhostHit();
+				}
+			}
+		}
+	}
+}
+
+void PlayerEnemy::BossHit()
+{
+	Player* player = m_owner->GetPlayer();
+	Boss* boss = m_owner->GetBoss();
+
+	const float playerRight = player->GetPos().x + player->GetRadiusX();
+	const float playerLeft = player->GetPos().x - player->GetRadiusX();
+	const float playerTop = player->GetPos().y + player->GetRadiusY();
+	const float playerBottom = player->GetPos().y - player->GetRadiusY();
+
+	const float nextRight = player->GetFuturePos().x + player->GetRadiusX();
+	const float nextLeft = player->GetFuturePos().x - player->GetRadiusX();
+	const float nextTop = player->GetFuturePos().y + player->GetRadiusY();
+	const float nextBottom = player->GetFuturePos().y - player->GetRadiusY();
+
+	const float bossRight = boss->GetPos().x + boss->GetRadius();
+	const float bossLeft = boss->GetPos().x - boss->GetRadius();
+	const float bossTop = boss->GetPos().y + boss->GetRadius();
+	const float bossBottom = boss->GetPos().y - boss->GetRadius();
+
+	if (boss->GetAliveFlg() == true)
+	{
+		//プレイヤーとブロックが縦で重なっているか
+		if (playerRight > bossLeft && playerLeft < bossRight)
+		{
+			if (nextBottom<bossTop && nextTop>bossTop)
+			{
+				player->PlayerBossHit();
+			}
+			else if (bossBottom < nextTop && nextBottom < bossBottom)
+			{
+				player->PlayerBossHit();
+			}
+		}
+		//プレイヤーとブロックが横で重なっているか
+		if (playerTop > bossBottom && playerBottom < bossTop)
+		{
+			if (nextLeft < bossRight && nextRight > bossRight)
+			{
+				player->PlayerBossHit();
+			}
+			else if (bossLeft < nextRight && nextLeft < bossLeft)
+			{
+				player->PlayerBossHit();
 			}
 		}
 	}

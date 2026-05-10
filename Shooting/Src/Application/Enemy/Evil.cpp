@@ -15,6 +15,7 @@ void Evil::Init()
 		m_aliveTime[e] = rand() & 121 + 60;
 		EvilOneAliveFlg[e] = true;
 		ShotFlg[e] = true;
+		repop = 0;
 	}
 
 	EnemyTex.Load("Texture/EvilBox1.png");
@@ -26,6 +27,7 @@ void Evil::Action()
 {
 	for (int e = 0;e < EvilNum;++e)
 	{
+		repop = rand() % 100 + 1;
 		if (m_aliveTime[e] > 0)
 		{
 			m_aliveTime[e]--;
@@ -78,13 +80,28 @@ void Evil::Action()
 							{
 								m_buAliveFlg[b] = true;
 								m_buPos[b] = m_pos[e];
-								m_buMove[b].x = -8;
+								m_buMove[b].x = -16;
 								ShotFlg[e] = false;
 								break;
 							}
 						}
 					}
 				}
+			}
+		}
+
+		if (repop < 20)
+		{
+			if (aliveFlg[e] == false)
+			{
+				EvilOneAliveFlg[e] = true;
+				m_aliveTime[e] = rand() & 121 + 60;
+				m_pos[e].x = rand() % 601 + 1280;
+				m_pos[e].y = rand() % 593 - 296;
+				m_posgap[e] = rand() % 351 - 50;
+				EvilmoveFlg[e] = true;
+				m_move[e].y = 0;
+				break;
 			}
 		}
 	}
@@ -129,6 +146,17 @@ void Evil::Release()
 void Evil::B_EvilHit(int e)
 {
 	aliveFlg[e] = false;
+}
+
+void Evil::Repop(int e)
+{
+	EvilOneAliveFlg[e] = true;
+	m_aliveTime[e] = rand() & 121 + 60;
+	m_pos[e].x = rand() % 601 + 1280;
+	m_pos[e].y = rand() % 593 - 296;
+	m_posgap[e] = rand() % 351 - 50;
+	EvilmoveFlg[e] = true;
+	m_move[e].y = 0;
 }
 
 void Evil::BulletInit()
