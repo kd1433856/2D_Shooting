@@ -6,6 +6,7 @@ void Player::Init()
 	player.move = { 0,0 };
 	player.scale = { 1.5,1.5 };
 	player.alpha = 1.0f;
+	m_delta = 0.1f;
 	player.AnimCnt = 0.0f;
 	player.aliveFlg = true;
 	shotWait = 0;
@@ -21,6 +22,8 @@ void Player::Init()
 	Hp = 12;
 	HpDownFlg = true;
 	HpDownTime = 0;
+	bariaFlg = false;
+	barialongFlg = false;
 	BoxInit();
 	FunnelInit();
 	StunInit();
@@ -155,6 +158,70 @@ void Player::Update()
 		shotWait--;
 	}
 
+	if (GetAsyncKeyState('1') & 0x8000)
+	{
+		stun.aliveFlg = true;
+		stunWait = 180;
+	}
+
+	if (GetAsyncKeyState('2') & 0x8000)
+	{
+		slow.aliveFlg = true;
+		slowWait = 180;
+	}
+
+	if (GetAsyncKeyState('3') & 0x8000)
+	{
+		silence.aliveFlg = true;
+		silenceWait = 60;
+	}
+
+	if (GetAsyncKeyState('4') & 0x8000)
+	{
+		ice.aliveFlg = true;
+		iceWait = 120;
+	}
+
+	if (GetAsyncKeyState('5') & 0x8000)
+	{
+		bleed.aliveFlg = true;
+		bleedWait = 30;
+	}
+
+	if (GetAsyncKeyState('6') & 0x8000)
+	{
+		charm.aliveFlg = true;
+		charmWait = 120;
+	}
+
+	if (GetAsyncKeyState('B') & 0x8000)
+	{
+
+		if (barialongFlg == true)	//’·‰Ÿ‚µ–hŽ~
+		{
+			//Ž©‹@“ü‚ê‘Ö‚¦ˆ—
+			switch (bariaFlg)
+			{
+			case	true:
+				bariaFlg = false;
+				barialongFlg = false;
+				break;
+
+			case	false:
+				bariaFlg = true;
+				barialongFlg = false;
+				break;
+
+			default:
+				break;
+			}
+		}
+	}
+	else
+	{
+		barialongFlg = true;
+	}
+
 	if (stun.aliveFlg == true)
 	{
 		stunWait--;
@@ -230,6 +297,48 @@ void Player::Update()
 		}
 	}
 
+	if (HpDownFlg == false)
+	{
+		player.alpha += m_delta;
+		if (player.alpha >= 1.0f)
+		{
+			m_delta = -0.1f;
+		}
+		if (player.alpha <= 0.5f)
+		{
+			m_delta = 0.1f;
+		}
+	}
+	else
+	{
+		player.alpha = 1.0f;
+	}
+
+	if (GetAsyncKeyState('K') & 0x8000)
+	{
+		m_score += 100;
+	}
+
+	if (GetAsyncKeyState('G') & 0x8000)
+	{
+		stun.aliveFlg = false;
+		slow.aliveFlg = false;
+		silence.aliveFlg = false;
+		ice.aliveFlg = false;
+		bleed.aliveFlg = false;
+		charm.aliveFlg = false;
+	}
+
+	if (GetAsyncKeyState('J') & 0x8000)
+	{
+		Hp = 0;
+	}
+
+	if (GetAsyncKeyState('H') & 0x8000)
+	{
+		Hp = 12;
+	}
+
 	if (Hp <= 0)
 	{
 		Hp = 0;
@@ -258,7 +367,7 @@ void Player::Draw()
 {
 	SHADER.m_spriteShader.SetMatrix(player.Mat);
 	//const Math::Color color = { RGB_r,RGB_g,RGB_b,player.alpha };
-	SHADER.m_spriteShader.DrawTex(&CharaTex, Math::Rectangle{ 48 * (int)player.AnimCnt,0,48,64 }, 1.0f);
+	SHADER.m_spriteShader.DrawTex(&CharaTex, Math::Rectangle{ 48 * (int)player.AnimCnt,0,48,64 }, player.alpha);
 	BoxDraw();
 	FunnelDraw();
 	StunDraw();
@@ -431,7 +540,7 @@ void Player::StunInit()
 {
 	stun.pos = { 0,0 };
 	stun.move = { 0,0 };
-	stun.scale = { 2.5,2.5 };
+	stun.scale = { 3.0,3.0 };
 	stun.alpha = 1.0f;
 	stun.aliveFlg = false;
 	stun.AnimCnt = 0.0f;
@@ -829,8 +938,6 @@ void Player::PlayerGhostHit()
 
 void Player::PlayerBossHit()
 {
-	stun.aliveFlg = true;
-	stunWait = 180;
 	if (HpDownFlg == true)
 	{
 		Hp--;
@@ -945,9 +1052,81 @@ bool Player::GetFBulletFlg(int b)
 	}
 }
 
+bool Player::GetStunFlg()
+{
+	if (stun.aliveFlg == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Player::GetSlowFlg()
+{
+	if (slow.aliveFlg == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Player::GetSilenceFlg()
+{
+	if (silence.aliveFlg == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Player::GetIceFlg()
+{
+	if (ice.aliveFlg == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Player::GetBleedFlg()
+{
+	if (bleed.aliveFlg == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 bool Player::GetCharmFlg()
 {
 	if (charm.aliveFlg == true)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Player::GetBariaFlg()
+{
+	if (bariaFlg == true)
 	{
 		return true;
 	}

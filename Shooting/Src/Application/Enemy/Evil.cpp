@@ -20,6 +20,7 @@ void Evil::Init()
 
 	EnemyTex.Load("Texture/EvilBox1.png");
 
+	BurnInit();
 	BulletInit();
 }
 
@@ -105,6 +106,7 @@ void Evil::Action()
 			}
 		}
 	}
+	BurnUpdate();
 	BulletUpdate();
 }
 
@@ -134,6 +136,7 @@ void Evil::Draw()
 			SHADER.m_spriteShader.DrawTex(&EnemyTex, Math::Rectangle(evilAnime[(int)AnimCnt[e]], 0, 32, 32), 1.0f);
 		}
 	}
+	BurnDraw();
 	BulletDraw();
 }
 
@@ -143,9 +146,59 @@ void Evil::Release()
 	m_BulletTex.Release();
 }
 
+void Evil::BurnInit()
+{
+	for (int b = 0;b < EvilNum;++b)
+	{
+		m_expPos[b] = { 0,0 };
+		m_expScale[b] = { 1,1 };
+		expAnimCnt[b] = 0;
+		expAliveFlg[b] = false;
+	}
+	ExpTex.Load("Texture/Explosion.png");
+}
+
+void Evil::BurnUpdate()
+{
+	for (int b = 0;b < EvilNum;++b)
+	{
+		if (expAliveFlg[b] == true)
+		{
+			expAnimCnt[b] += 0.25f;
+			if (expAnimCnt[b] > 10)
+			{
+				expAliveFlg[b] = false;
+				expAnimCnt[b] = 0;
+				m_expPos[b] = { 1000,1000 };
+			}
+		}
+
+		m_expTransMat[b] = Math::Matrix::CreateTranslation(m_expPos[b].x, m_expPos[b].y, 0);
+		m_expScaleMat[b] = Math::Matrix::CreateScale(m_expScale[b].x, m_expScale[b].y, 1);
+		m_expMat[b] = m_expScaleMat[b] * m_expTransMat[b];
+	}
+}
+
+void Evil::BurnDraw()
+{
+	for (int b = 0;b < EvilNum;++b)
+	{
+		if (expAliveFlg[b] == true)
+		{
+			if (expAnimCnt[b] > 1)
+			{
+				SHADER.m_spriteShader.SetMatrix(m_expMat[b]);
+				SHADER.m_spriteShader.DrawTex(&ExpTex, Math::Rectangle(64 * (int)expAnimCnt[b], 0, 64, 64), 1.0f);
+			}
+		}
+	}
+}
+
 void Evil::B_EvilHit(int e)
 {
 	aliveFlg[e] = false;
+	m_expPos[e] = m_pos[e];
+	expAliveFlg[e] = true;
 }
 
 void Evil::Repop(int e)
@@ -157,6 +210,7 @@ void Evil::Repop(int e)
 	m_posgap[e] = rand() % 351 - 50;
 	EvilmoveFlg[e] = true;
 	m_move[e].y = 0;
+	expAliveFlg[e] = false;
 }
 
 void Evil::BulletInit()

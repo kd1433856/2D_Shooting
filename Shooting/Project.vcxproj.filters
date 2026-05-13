@@ -195,6 +195,9 @@
     <ClInclude Include="Src\Application\Enemy\Ghost.h">
       <Filter>Src\Application\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\DebuffDraw.h">
+      <Filter>Src\Application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -307,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Enemy\Ghost.cpp">
       <Filter>Src\Application\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\DebuffDraw.cpp">
+      <Filter>Src\Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

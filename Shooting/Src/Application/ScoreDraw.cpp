@@ -2,23 +2,23 @@
 
 void ScoreDraw::Init()
 {
-	score[0].m_pos = { 70,260 };	//s
+	score[0].m_pos = { 170,260 };	//s
 	score[0].m_scale = { 4,4 };
-	score[1].m_pos = { 110,260 };	//c
+	score[1].m_pos = { 210,260 };	//c
 	score[1].m_scale = { 4,4 };
-	score[2].m_pos = { 150,260 };	//o
+	score[2].m_pos = { 250,260 };	//o
 	score[2].m_scale = { 4,4 };
-	score[3].m_pos = { 190,260 };	//r
+	score[3].m_pos = { 290,260 };	//r
 	score[3].m_scale = { 3.6,3.6 };
-	score[4].m_pos = { 230,260 };	//e
+	score[4].m_pos = { 330,260 };	//e
 	score[4].m_scale = { 4,4 };
-	score[5].m_pos = { 100,320 };	//g
+	score[5].m_pos = { 200,320 };	//g
 	score[5].m_scale = { 2.3,2.3 };
-	score[6].m_pos = { 140,320 };	//o
+	score[6].m_pos = { 240,320 };	//o
 	score[6].m_scale = { 2.3,2.3 };
-	score[7].m_pos = { 180,320 };	//a
+	score[7].m_pos = { 280,320 };	//a
 	score[7].m_scale = { 2.3,2.3 };
-	score[8].m_pos = { 220,320 };	//l
+	score[8].m_pos = { 320,320 };	//l
 	score[8].m_scale = { 2.3,2.3 };
 	m_scoreTex.Load("Texture/Antiquity_SpriteSheet.png");
 }

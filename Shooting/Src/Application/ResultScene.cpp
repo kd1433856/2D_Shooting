@@ -53,8 +53,10 @@ void ResultScene::Init()
 	game[7].m_pos = { 350,0 };
 	game[7].m_scale = { 6,6 };
 
-	title.m_pos = { -80,-200 };
+	title.m_pos = { -30,-200 };
 	title.m_scale = { 0.7,0.7 };
+
+	KeyFlg = false;
 
 	m_mojiTex.Load("Texture/Antiquity_SpriteSheet.png");
 	m_numTex.Load("Texture/Number.png");
@@ -92,11 +94,19 @@ void ResultScene::Update(int stagePos, bool result)
 	title.m_SacleMat = Math::Matrix::CreateScale(title.m_scale.x, title.m_scale.y, 1);
 	title.m_Mat = title.m_SacleMat * title.m_TransMat;
 
-	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
-		SCENEMANAGER.ChangeState(new TitleScene());
-		SCENEMANAGER.Init();
-		return;
+		if(KeyFlg==true)
+		{
+			KeyFlg = false;
+			SCENEMANAGER.ChangeState(new TitleScene());
+			SCENEMANAGER.Init();
+			return;
+		}
+	}
+	else
+	{
+		KeyFlg = true;
 	}
 }
 
@@ -235,4 +245,5 @@ void ResultScene::Release()
 {
 	m_mojiTex.Release();
 	m_numTex.Release();
+	m_titleTex.Release();
 }

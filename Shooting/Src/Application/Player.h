@@ -105,7 +105,13 @@ public:
 	int GetFBulletNum() { return FunnelBulletNum; }
 	bool GetFBulletFlg(int b);
 
+	bool GetStunFlg();
+	bool GetSlowFlg();
+	bool GetSilenceFlg();
+	bool GetIceFlg();
+	bool GetBleedFlg();
 	bool GetCharmFlg();
+	bool GetBariaFlg();
 
 	void SetOwner(GameScene* owner) { m_owner = owner; }
 
@@ -140,6 +146,8 @@ private:
 	Chara bleed;
 	Chara charm;
 
+	float m_delta;
+
 	float m_deg;
 	bool starFlg;
 	bool rotateFlg;	//‰ñ“]
@@ -172,6 +180,9 @@ private:
 	int Hp;
 	bool HpDownFlg;
 	float HpDownTime;
+
+	bool bariaFlg;
+	bool barialongFlg;
 
 	unsigned long m_score = 0;
 

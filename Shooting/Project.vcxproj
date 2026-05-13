@@ -160,6 +160,7 @@
     <ClInclude Include="..\Library\tinygltf\stb_image_write.h" />
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
     <ClInclude Include="Src\Application\Back.h" />
+    <ClInclude Include="Src\Application\DebuffDraw.h" />
     <ClInclude Include="Src\Application\Enemy\Boss.h" />
     <ClInclude Include="Src\Application\Enemy\Ghost.h" />
     <ClInclude Include="Src\Application\GameScene.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="..\Library\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Src\Application\Back.cpp" />
+    <ClCompile Include="Src\Application\DebuffDraw.cpp" />
     <ClCompile Include="Src\Application\Enemy\Boss.cpp" />
     <ClCompile Include="Src\Application\Enemy\Ghost.cpp" />
     <ClCompile Include="Src\Application\GameScene.cpp" />

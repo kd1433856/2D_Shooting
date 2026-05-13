@@ -40,4 +40,6 @@ private:
 
 	MOJI title;
 
+	bool KeyFlg;
+
 };

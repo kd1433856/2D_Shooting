@@ -13,6 +13,7 @@ public:
 	void Draw();
 	void Release();
 
+	void BossRepop();
 	void BulletRepop(int b);
 	void ArrowRepop(int a);
 	void B_BossHit(bool charm);
@@ -35,7 +36,6 @@ public:
 	Math::Vector2 GetScale() { return m_scale; }
 	float  GetRadius() { return 16.0f * fabs(m_scale.x); }
 	bool GetAliveFlg();
-	bool GetResultFlg();
 
 	void SetHp(int a_hp) { BossHp = a_hp; }
 
@@ -63,6 +63,7 @@ private:
 	bool aliveFlg;
 	float AnimCnt;
 	float m_alpha;
+	float m_delta;
 	int ShotRandom;
 	int BossHp;
 	bool BossHpDownFlg;
@@ -116,8 +117,6 @@ private:
 
 	int ShotRainRandom;
 	bool ShotRainFlg;
-
-	bool resultFlg;
 
 	KdTexture m_HpTex;
 	Math::Vector2 m_hpPos;

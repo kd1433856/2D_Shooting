@@ -23,6 +23,7 @@ void GameScene::Init()
 	boss.Init();
 	result.Init();
 	score.Init();
+	debuff.Init();
 	back.Init();
 	
 	m_scoreTex.Load("Texture/Number.png");
@@ -35,13 +36,13 @@ void GameScene::Update()
 		switch (stageNum)
 		{
 		case 1:
-			goalscore = 2000;
+			goalscore = 3000;
 			break;
 		case 2:
-			goalscore = 5000;
+			goalscore = 6000;
 			break;
 		case 3:
-			goalscore = 8000;
+			goalscore = 9000;
 			break;
 		default:
 			break;
@@ -49,6 +50,13 @@ void GameScene::Update()
 		player.Update();
 		life.SetHp(player.GetHp());
 		life.Update();
+		debuff.SetStunFlg(player.GetStunFlg());
+		debuff.SetSlowFlg(player.GetSlowFlg());
+		debuff.SetSilenceFlg(player.GetSilenceFlg());
+		debuff.SetIceFlg(player.GetIceFlg());
+		debuff.SetBleedFlg(player.GetBleedFlg());
+		debuff.SetCharmFlg(player.GetCharmFlg());
+		debuff.Update();
 
 		unsigned long gaoltmp = goalscore;
 		for (int i = goalscoremaxDirit - 1;i >= 0;--i)
@@ -87,9 +95,12 @@ void GameScene::Update()
 			case 1:
 				phoenix.Action();
 				phoenix.Update();
-				if (player.GetGard() == false)
+				if (player.GetBariaFlg() == false)
 				{
-					pe_hit.PhoenixHit();
+					if (player.GetGard() == false)
+					{
+						pe_hit.PhoenixHit();
+					}
 				}
 				be_hit.PBulletPhoenix();
 				be_hit.FBulletPhoenix();
@@ -99,11 +110,14 @@ void GameScene::Update()
 				phoenix.Update();
 				evil.Action();
 				evil.Update();
-				if (player.GetGard() == false)
+				if (player.GetBariaFlg() == false)
 				{
-					pe_hit.PhoenixHit();
-					pe_hit.EvilHit();
-					be_hit.EvilBulletHit();
+					if (player.GetGard() == false)
+					{
+						pe_hit.PhoenixHit();
+						pe_hit.EvilHit();
+						be_hit.EvilBulletHit();
+					}
 				}
 				be_hit.PBulletPhoenix();
 				be_hit.FBulletPhoenix();
@@ -117,12 +131,15 @@ void GameScene::Update()
 				evil.Update();
 				ghost.Action();
 				ghost.Update();
-				if (player.GetGard() == false)
+				if (player.GetBariaFlg() == false)
 				{
-					pe_hit.PhoenixHit();
-					pe_hit.EvilHit();
-					be_hit.EvilBulletHit();
-					pe_hit.GhostHit();
+					if (player.GetGard() == false)
+					{
+						pe_hit.PhoenixHit();
+						pe_hit.EvilHit();
+						be_hit.EvilBulletHit();
+						pe_hit.GhostHit();
+					}
 				}
 				be_hit.PBulletPhoenix();
 				be_hit.FBulletPhoenix();
@@ -137,7 +154,7 @@ void GameScene::Update()
 
 		if (BossRepopFlg == true)
 		{
-			boss.SetHp(20);
+			boss.BossRepop();
 			for (int b = 0;b < boss.GetBulletNum();++b)
 			{
 				boss.BulletRepop(b);
@@ -153,12 +170,15 @@ void GameScene::Update()
 		{
 			NormalRepopFlg = true;
 			stageFlg = false;
-			if (player.GetGard() == false)
+			if (player.GetBariaFlg() == false)
 			{
-				pe_hit.BossHit();
-				be_hit.BossBulletHit();
-				be_hit.BossArrowHit();
-				be_hit.BossRainHit();
+				if (player.GetGard() == false)
+				{
+					pe_hit.BossHit();
+					be_hit.BossBulletHit();
+					be_hit.BossArrowHit();
+					be_hit.BossRainHit();
+				}
 			}
 
 			boss.Action(stageNum);
@@ -237,6 +257,7 @@ void GameScene::Draw()
 	if (player.GetAliveFlg() == true && resultFlg == false)
 	{
 		life.Draw();
+		debuff.Draw();
 
 		if (player.GetScore() < goalscore)
 		{
@@ -247,7 +268,7 @@ void GameScene::Draw()
 			{
 				Math::Rectangle rc = { 9 * m_scoredigits[i],0,9,9 };
 
-				float posX = 300;
+				float posX = 400;
 
 				//表示(サイズ5倍)
 				Math::Matrix TransMat;
@@ -265,7 +286,7 @@ void GameScene::Draw()
 			{
 				Math::Rectangle rc = { 9 * m_goalscoredigits[i],0,9,9 };
 
-				float posX = 300;
+				float posX = 400;
 
 				//表示(サイズ5倍)
 				Math::Matrix TransMat;
@@ -292,5 +313,6 @@ void GameScene::Release()
 	result.Release();
 	score.Release();
 	back.Release();
+	debuff.Relaese();
 	m_scoreTex.Release();
 }

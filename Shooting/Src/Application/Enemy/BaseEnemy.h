@@ -22,4 +22,13 @@ protected:
 	bool aliveFlg[EnemyNum];
 	float AnimCnt[EnemyNum];
 	float repop;
+
+	KdTexture ExpTex;
+	Math::Vector2 m_expPos[EnemyNum];
+	Math::Vector2 m_expScale[EnemyNum];
+	Math::Matrix m_expMat[EnemyNum];
+	Math::Matrix m_expTransMat[EnemyNum];
+	Math::Matrix m_expScaleMat[EnemyNum];
+	bool expAliveFlg[EnemyNum];
+	float expAnimCnt[EnemyNum];
 };

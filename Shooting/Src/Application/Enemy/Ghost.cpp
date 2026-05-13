@@ -11,6 +11,7 @@ void Ghost::Init()
 		m_scale[g] = { 2.0,2.0 };
 		aliveFlg[g] = true;
 		AnimCnt[g] = 0;
+		m_alpha[g] = 0.0f;
 	}
 
 	EnemyTex.Load("Texture/ghost-Sheet.png");
@@ -20,6 +21,8 @@ void Ghost::Action()
 {
 	for (int g = 0;g < GhostNum;++g)
 	{
+		m_alpha[g] += 0.1f;
+
 		AnimCnt[g] += 0.3f;
 		if (AnimCnt[g] > 4)
 		{
@@ -67,7 +70,7 @@ void Ghost::Draw()
 		if (aliveFlg[g] == true)
 		{
 			SHADER.m_spriteShader.SetMatrix(Mat[g]);
-			SHADER.m_spriteShader.DrawTex(&EnemyTex, Math::Rectangle(32 * (int)AnimCnt[g], 0, 32, 32), 1.0f);
+			SHADER.m_spriteShader.DrawTex(&EnemyTex, Math::Rectangle(32 * (int)AnimCnt[g], 0, 32, 32), m_alpha[g]);
 		}
 	}
 }

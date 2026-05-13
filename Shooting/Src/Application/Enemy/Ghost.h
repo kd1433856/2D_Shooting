@@ -22,6 +22,8 @@ public:
 
 private:
 
-	static const int GhostNum = 7;
+	static const int GhostNum = 5;
+
+	float m_alpha[GhostNum];
 
 };

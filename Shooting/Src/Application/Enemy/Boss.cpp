@@ -8,6 +8,7 @@ void Boss::Init()
 	aliveFlg = true;
 	AnimCnt = 0;
 	m_alpha = 1.0f;
+	m_delta = -0.1f;
 	BossHp = 20;
 	BossHpDownFlg = true;
 	BossHpDownTime = 0;
@@ -16,8 +17,6 @@ void Boss::Init()
 	ShotRainRandom = 0;
 	BossHpHealFlg = true;
 	HealCoolTime = 0;
-
-	resultFlg = false;
 
 	BossTex.Load("Texture/VampireAngry.png");
 	BulletInit();
@@ -74,6 +73,23 @@ void Boss::Action(int stage)
 			}
 		}
 
+		if (BossHpDownFlg == false)
+		{
+			m_alpha += m_delta;
+			if (m_alpha >= 1.0f)
+			{
+				m_delta = -0.1f;
+			}
+			if (m_alpha <= 0.5f)
+			{
+				m_delta = 0.1f;
+			}
+		}
+		else
+		{
+			m_alpha = 1.0f;
+		}
+
 		if (HealCoolTime > 0)
 		{
 			HealCoolTime--;
@@ -85,7 +101,7 @@ void Boss::Action(int stage)
 
 		if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
 		{
-			aliveFlg = false;
+			BossHp = 0;
 		}
 
 		switch (stage)
@@ -208,6 +224,16 @@ void Boss::Draw()
 void Boss::Release()
 {
 	BossTex.Release();
+}
+
+void Boss::BossRepop()
+{
+	m_pos = { 700,0 };
+	m_move = { -5,0 };
+	BossHp = 20;
+	ShotRandom = 0;
+	ShotArrowRandom = 0;
+	ShotRainRandom = 0;
 }
 
 void Boss::BulletRepop(int b)
@@ -456,18 +482,6 @@ void Boss::RainDraw()
 bool Boss::GetAliveFlg()
 {
 	if (aliveFlg == true)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-bool Boss::GetResultFlg()
-{
-	if (resultFlg == true)
 	{
 		return true;
 	}

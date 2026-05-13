@@ -40,4 +40,6 @@ private:
 
 	C_Back back;
 
+	bool KeyFlg;
+
 };

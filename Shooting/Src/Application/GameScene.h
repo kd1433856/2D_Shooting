@@ -10,6 +10,7 @@
 #include"Hit/BulletEnemy.h"
 #include"ResultScene.h"
 #include"ScoreDraw.h"
+#include"DebuffDraw.h"
 #include"Back.h"
 
 class GameScene :public State
@@ -42,6 +43,7 @@ private:
 	BulletEnemy be_hit;
 	ResultScene result;
 	ScoreDraw score;
+	DebuffDraw debuff;
 	C_Back back;
 
 	int stageNum;
@@ -52,8 +54,8 @@ private:
 	unsigned long goalscore;
 
 	//表示する桁数
-	static const int scoremaxDirit = 7;
-	static const int goalscoremaxDirit = 7;
+	static const int scoremaxDirit = 5;
+	static const int goalscoremaxDirit = 5;
 
 	KdTexture m_scoreTex;
 	int m_scoredigits[scoremaxDirit] = {}; //各桁の数値を格納

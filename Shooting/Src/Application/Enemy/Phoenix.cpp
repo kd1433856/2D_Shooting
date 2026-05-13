@@ -4,7 +4,7 @@ void Phoenix::Init()
 {
 	for(int e=0;e<EnemyNum;e++)
 	{
-		m_pos[e].x = rand() % 601 + 1280;
+		m_pos[e].x = rand() % 1201 + 1280;
 		//m_pos[e].x = 200;
 		m_pos[e].y = rand() % 721 - 360;
 		//m_pos[e].y = 0;
@@ -17,6 +17,7 @@ void Phoenix::Init()
 	}
 
 	EnemyTex.Load("Texture/Phoenixling Sprite Sheet.png");
+	BurnInit();
 }
 
 void Phoenix::Action()
@@ -34,23 +35,24 @@ void Phoenix::Action()
 
 			if (m_pos[e].x < -640 - (32 * 2.5))
 			{
-				m_pos[e].x = rand() % 401 + 1260;
-				m_pos[e].y = rand() % 721 - 360;
+				aliveFlg[e] = false;
+				break;
 			}
 		}
 
-		if (repop < 5)
+		if (repop < 20)
 		{
 			if (aliveFlg[e] == false)
 			{
 				aliveFlg[e] = true;
-				m_pos[e].x = rand() % 401 + 1260;
+				m_pos[e].x = rand() % 1201 + 1260;
 				m_pos[e].y = rand() % 721 - 360;
 				AnimCnt[e] = 0;
 				break;
 			}
 		}
 	}
+	BurnUpdate();
 }
 
 void Phoenix::Update()
@@ -78,6 +80,7 @@ void Phoenix::Draw()
 			SHADER.m_spriteShader.DrawTex(&EnemyTex, Math::Rectangle(64 * (int)AnimCnt[e], 64, 64, 64), 1.0f);
 		}
 	}
+	BurnDraw();
 }
 
 void Phoenix::Release()
@@ -85,17 +88,68 @@ void Phoenix::Release()
 	EnemyTex.Release();
 }
 
+void Phoenix::BurnInit()
+{
+	for (int b = 0;b < EnemyNum;++b)
+	{
+		m_expPos[b] = { 0,0 };
+		m_expScale[b] = { 1,1 };
+		expAnimCnt[b] = 0;
+		expAliveFlg[b] = false;
+	}
+	ExpTex.Load("Texture/Explosion.png");
+}
+
+void Phoenix::BurnUpdate()
+{
+	for (int b = 0;b < EnemyNum;++b)
+	{
+		if (expAliveFlg[b] == true)
+		{
+			expAnimCnt[b] += 0.25f;
+			if (expAnimCnt[b] > 10)
+			{
+				expAliveFlg[b] = false;
+				expAnimCnt[b] = 0;
+				m_expPos[b] = { 1000,1000 };
+			}
+		}
+
+		m_expTransMat[b] = Math::Matrix::CreateTranslation(m_expPos[b].x, m_expPos[b].y, 0);
+		m_expScaleMat[b] = Math::Matrix::CreateScale(m_expScale[b].x, m_expScale[b].y, 1);
+		m_expMat[b] = m_expScaleMat[b] * m_expTransMat[b];
+	}
+}
+
+void Phoenix::BurnDraw()
+{
+	for (int b = 0;b < EnemyNum;++b)
+	{
+		if (expAliveFlg[b] == true)
+		{
+			if (expAnimCnt[b] > 1)
+			{
+				SHADER.m_spriteShader.SetMatrix(m_expMat[b]);
+				SHADER.m_spriteShader.DrawTex(&ExpTex, Math::Rectangle(64 * (int)expAnimCnt[b], 0, 64, 64), 1.0f);
+			}
+		}
+	}
+}
+
 void Phoenix::B_PhoenixHit(int e)
 {
 	aliveFlg[e] = false;
+	m_expPos[e] = m_pos[e];
+	expAliveFlg[e] = true;
 }
 
 void Phoenix::Repop(int e)
 {
 	aliveFlg[e] = true;
-	m_pos[e].x = rand() % 401 + 1260;
+	m_pos[e].x = rand() % 1201 + 1260;
 	m_pos[e].y = rand() % 721 - 360;
 	AnimCnt[e] = 0;
+	expAliveFlg[e] = false;
 }
 
 bool Phoenix::GetAliveFlg(int e)

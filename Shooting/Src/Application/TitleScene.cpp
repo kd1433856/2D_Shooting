@@ -7,6 +7,7 @@ void TitleScene::Init()
 	m_move = { 5,0 };
 	m_scale = { 1.5,1.5 };
 	AnimCnt = 0;
+	KeyFlg = false;
 	PlayerTex.Load("Texture/WitchFlying.png");
 	TitleTex.Load("Texture/Title.png");
 	PressTex.Load("Texture/Press.png");
@@ -40,9 +41,17 @@ void TitleScene::Update()
 
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
-		SCENEMANAGER.ChangeState(new TutorialScene());
-		SCENEMANAGER.Init();
-		return;
+		if(KeyFlg==true)
+		{
+			KeyFlg = false;
+			SCENEMANAGER.ChangeState(new TutorialScene());
+			SCENEMANAGER.Init();
+			return;
+		}
+	}
+	else
+	{
+		KeyFlg = true;
 	}
 
 	TitleTrans = Math::Matrix::CreateTranslation(0, 200, 0);
@@ -50,7 +59,7 @@ void TitleScene::Update()
 	TitleMat = TitleScale * TitleTrans;
 
 	PressTrans = Math::Matrix::CreateTranslation(0, -280, 0);
-	PressScale = Math::Matrix::CreateScale(1, 1, 1);
+	PressScale = Math::Matrix::CreateScale(0.6f, 0.6f, 1);
 	PressMat = PressScale * PressTrans;
 
 	back.Update();

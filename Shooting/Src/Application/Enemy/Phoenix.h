@@ -14,6 +14,10 @@ public:
 	virtual void Draw();
 	virtual void Release();
 
+	void BurnInit();
+	void BurnUpdate();
+	void BurnDraw();
+
 	void B_PhoenixHit(int e);
 	void Repop(int e);
 
